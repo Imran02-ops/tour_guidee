@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DestinationController extends Controller
 {
@@ -23,10 +24,8 @@ class DestinationController extends Controller
             });
         }
 
-        // PENTING: simpan query string agar pagination tidak lompat kategori
         $destinations = $query->latest()->paginate(10)->withQueryString();
-
-        $categories = Destination::$allowedCategories;
+        $categories   = Destination::$allowedCategories;
 
         return view('destinations.index', compact('destinations', 'categories'))
             ->with('activeCategory', $request->category);
@@ -48,25 +47,52 @@ class DestinationController extends Controller
             'image'       => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $image = $request->file('image');
-        $fileName = time().'_'.$image->getClientOriginalName();
-        $path = $image->storeAs('destinations', $fileName, 'public');
+        $fileName = time().'_'.$request->image->getClientOriginalName();
+        $validated['image'] = $request->image->storeAs('destinations', $fileName, 'public');
 
-        Destination::create([
-            'name'        => $validated['name'],
-            'location'    => $validated['location'],
-            'category'    => $validated['category'],
-            'price'       => $validated['price'],
-            'description' => $validated['description'],
-            'image'       => $path,
-        ]);
+        Destination::create($validated);
 
-        return redirect()->route('destinations.index')
-            ->with('success', 'Destinasi berhasil ditambahkan');
+        return redirect()->route('destinations.index')->with('success','Destinasi berhasil ditambahkan');
     }
 
     public function show(Destination $destination)
     {
         return view('destinations.show', compact('destination'));
+    }
+
+    public function edit(Destination $destination)
+    {
+        return view('destinations.edit', compact('destination'));
+    }
+
+    public function update(Request $request, Destination $destination)
+    {
+        $validated = $request->validate([
+            'name'        => 'required|string|max:255',
+            'location'    => 'required|string|max:255',
+            'category'    => 'required|in:' . implode(',', Destination::$allowedCategories),
+            'price'       => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($destination->image);
+
+            $fileName = time().'_'.$request->image->getClientOriginalName();
+            $validated['image'] = $request->image->storeAs('destinations', $fileName, 'public');
+        }
+
+        $destination->update($validated);
+
+        return redirect()->route('destinations.index')->with('success','Destinasi berhasil diperbarui');
+    }
+
+    public function destroy(Destination $destination)
+    {
+        Storage::disk('public')->delete($destination->image);
+        $destination->delete();
+
+        return back()->with('success','Destinasi berhasil dihapus');
     }
 }
