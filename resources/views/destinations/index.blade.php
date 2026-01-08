@@ -52,24 +52,7 @@
     <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
 
         @foreach($destinations as $d)
-        <div class="relative bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
-
-            {{-- ACTION --}}
-            <div class="absolute top-2 right-2 z-10 flex gap-2">
-                <button onclick="openEditModal({{ $d }})"
-                   class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
-                    Ubah
-                </button>
-
-                <form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
-                      onsubmit="return confirm('Yakin hapus destinasi ini?')">
-                    @csrf
-                    @method('DELETE')
-                    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
-                        Hapus
-                    </button>
-                </form>
-            </div>
+        <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
 
             <a href="{{ route('destinations.show', $d->id) }}">
                 <div class="relative">
@@ -82,13 +65,33 @@
                 <div class="p-4">
                     <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
                     <p class="text-sm text-gray-500">{{ $d->location }}</p>
-                    <p class="mt-2 font-semibold text-teal-700">
-                        Rp {{ number_format($d->price,0,',','.') }}
-                    </p>
+
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="font-semibold text-teal-700">
+                            Rp {{ number_format($d->price,0,',','.') }}
+                        </p>
+
+                        <div class="flex gap-2">
+                            <button onclick="event.preventDefault(); openEditModal({{ $d }});"
+                                class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
+                                Ubah
+                            </button>
+
+                            <form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
+                                  onsubmit="event.preventDefault(); if(confirm('Yakin hapus destinasi ini?')) this.submit();">
+                                @csrf
+                                @method('DELETE')
+                                <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </a>
         </div>
         @endforeach
+
     </div>
 
     <div class="mt-12 flex justify-end">
