@@ -64,11 +64,24 @@ Kirim Pesan
 </section>
 
 <!-- MAP -->
-<div class="max-w-6xl mx-auto px-8 pb-24">
+<section class="max-w-7xl mx-auto px-6 pb-24">
+
+<h2 class="text-4xl font-bold text-center mb-10">
+    Map <span class="text-teal-700">NTB</span>
+</h2>
+
+<div class="rounded-2xl overflow-hidden shadow-xl">
 <iframe
-  src="https://www.google.com/maps?q=Lombok%20Nusa%20Tenggara%20Barat&output=embed"
-  width="100%" height="420" style="border:0;" allowfullscreen loading="lazy"></iframe>
+    src="https://www.google.com/maps/d/embed?mid=1n4n9cQ4X8vR1ST8b7zZsmG9L0pE&hl=en"
+    width="100%"
+    height="450"
+    style="border:0;"
+    loading="lazy">
+</iframe>
 </div>
+
+</section>
+
 
 <script>
 function sendWA(e){
