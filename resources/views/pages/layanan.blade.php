@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="relative h-[300px] bg-cover bg-center"
-style="background-image:url('{{ asset('images/layanan-bg.jpg') }}')">
+style="background-image:url('{{ asset('images/gggg.png') }}')">
 <div class="absolute inset-0 bg-black/40"></div>
 <div class="relative h-full flex items-center justify-center text-white text-5xl font-bold">
 Layanan
