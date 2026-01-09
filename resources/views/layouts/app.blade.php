@@ -59,17 +59,33 @@ body{background:#f3f4f6}
 </div>
 
 <nav class="flex items-center gap-8 text-white font-semibold">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/profil-aik-berik" class="nav-link">Profil</a>
-    <a href="/layanan-aik-berik" class="nav-link">Layanan</a>
-    <a href="/galeri-aik-berik" class="nav-link">Galeri</a>
-    <a href="/kontak-aik-berik" class="nav-link">Kontak</a>
-
-    <a href="/kontak-aik-berik"
-       class="ml-6 bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition">
-       Contact Us →
+    <a href="{{ url('/') }}" 
+       class="nav-link {{ request()->is('/') ? 'text-yellow-300' : '' }}">
+        Home
     </a>
+    <a href="{{ url('/profil-jejaklangkah') }}" 
+       class="nav-link {{ request()->is('profil-jejaklangkah') ? 'text-yellow-300' : '' }}">
+        Profil
+    </a>
+    <a href="{{ url('/layanan-jejaklangkah') }}" 
+       class="nav-link {{ request()->is('layanan-jejaklangkah') ? 'text-yellow-300' : '' }}">
+        Layanan
+    </a>
+    <a href="{{ url('/galeri-jejaklangkah') }}" 
+       class="nav-link {{ request()->is('galeri-jejaklangkah') ? 'text-yellow-300' : '' }}">
+        Galeri
+    </a>
+    <a href="{{ url('/kontak-jejaklangkah') }}" 
+       class="nav-link {{ request()->is('kontak-jejaklangkah') ? 'text-yellow-300' : '' }}">
+        Kontak
+    </a>
+    <a href="{{ url('/kontak-jejaklangkah') }}"
+       class="ml-6 bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition">
+        Contact Us →
+    </a>
+
 </nav>
+
 
 </div>
 </header>
