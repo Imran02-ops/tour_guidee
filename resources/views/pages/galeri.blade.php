@@ -1,31 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="max-w-7xl mx-auto px-8 py-24">
 
-<section class="relative h-[300px] bg-cover bg-center"
-style="background-image:url('{{ asset('images/gggg.png') }}')">
-<div class="absolute inset-0 bg-black/40"></div>
-<div class="relative h-full flex items-center justify-center text-white text-5xl font-bold">
-Galeri
-</div>
-</section>
+    <h2 class="text-4xl font-extrabold text-center mb-14">
+        Galeri <span class="text-teal-700">JejakLangkah.id</span>
+    </h2>
 
-<section class="max-w-7xl mx-auto px-8 py-20 grid grid-cols-2 md:grid-cols-4 gap-6">
-
-<div class="container mx-auto px-4 py-8">
-    <h2 class="text-3xl font-bold text-center mb-8">Galeri JejakLangkah.id</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        @for($i=1; $i<=8; $i++)
-            <div class="overflow-hidden rounded-xl">
-                <img src="{{ asset("images/gallery/$i.jpg") }}" 
-                     alt="Destinasi NTB {{ $i }}"
-                     class="w-full h-64 object-cover shadow-lg hover:scale-110 transition duration-500 ease-in-out">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        @foreach(['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'] as $img)
+            <div class="overflow-hidden rounded-2xl shadow-lg group aspect-[3/4]">
+                <img src="{{ asset('images/gallery/'.$img) }}"
+                     class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
             </div>
-        @endfor
+        @endforeach
     </div>
+
 </div>
-
-</section>
-
 @endsection
