@@ -50,7 +50,6 @@ class="glass-box flex items-center gap-4 px-6 py-5 hover:scale-105 transition">
 
 </div>
 
-
 </div>
 </section>
 

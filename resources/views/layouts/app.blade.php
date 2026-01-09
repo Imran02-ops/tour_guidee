@@ -79,9 +79,11 @@ body{background:#f3f4f6}
 </div>
 
 <!-- MOBILE MENU -->
-<div id="mobileMenu" class="hidden fixed inset-0 bg-[#0f3f3b] z-40 flex flex-col items-center justify-center gap-6 text-white text-xl font-semibold">
+<div id="mobileMenu"
+class="hidden absolute top-full left-0 w-full bg-[#0f3f3b] z-40
+       flex flex-col items-center gap-6 py-10 text-white text-xl font-semibold shadow-xl">
 
-    <button id="closeBtn" class="absolute top-6 right-6 text-4xl">×</button>
+    <button id="closeBtn" class="absolute top-4 right-6 text-3xl">×</button>
 
     <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'text-yellow-300' : '' }}">Home</a>
     <a href="{{ url('/profil-jejaklangkah') }}" class="{{ request()->is('profil-jejaklangkah') ? 'text-yellow-300' : '' }}">Profil</a>
@@ -93,6 +95,7 @@ body{background:#f3f4f6}
        Contact Us →
     </a>
 </div>
+
 </header>
 
 <!-- ================= CONTENT ================= -->
