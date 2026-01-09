@@ -14,3 +14,7 @@ Route::resource('destinations', DestinationController::class);
 // GUIDES
 Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
 Route::get('/guides/{id}', [GuideController::class, 'show'])->name('guides.show');
+Route::view('/profil','pages.profil');
+Route::view('/layanan','pages.layanan');
+Route::view('/galeri','pages.galeri');
+Route::view('/kontak','pages.kontak');
