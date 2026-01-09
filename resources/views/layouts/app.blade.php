@@ -50,7 +50,7 @@ body{background:#f3f4f6}
 <body>
 
 <!-- ================= NAVBAR ================= -->
-<header class="bg-teal-700 shadow-lg fixed top-0 left-0 w-full z-50">
+<header class="bg-[#0f3f3b] shadow-lg fixed top-0 left-0 w-full z-50">
 <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
 <div class="flex items-center gap-3">
@@ -61,28 +61,25 @@ body{background:#f3f4f6}
 <nav class="flex items-center gap-8 text-white font-semibold">
     <a href="{{ url('/') }}" 
        class="nav-link {{ request()->is('/') ? 'text-yellow-300' : '' }}">
-        Home
+            Home
     </a>
     <a href="{{ url('/profil-jejaklangkah') }}" 
        class="nav-link {{ request()->is('profil-jejaklangkah') ? 'text-yellow-300' : '' }}">
-        Profil
-    </a>
-    <a href="{{ url('/layanan-jejaklangkah') }}" 
-       class="nav-link {{ request()->is('layanan-jejaklangkah') ? 'text-yellow-300' : '' }}">
-        Layanan
+            Profil
     </a>
     <a href="{{ url('/galeri-jejaklangkah') }}" 
        class="nav-link {{ request()->is('galeri-jejaklangkah') ? 'text-yellow-300' : '' }}">
-        Galeri
+            Galeri
     </a>
     <a href="{{ url('/kontak-jejaklangkah') }}" 
-       class="nav-link {{ request()->is('kontak-jejaklangkah') ? 'text-yellow-300' : '' }}">
-        Kontak
+        class="nav-link {{ request()->is('kontak-jejaklangkah') ? 'text-yellow-300' : '' }}">
+            Kontak
     </a>
-    <a href="{{ url('/kontak-jejaklangkah') }}"
-       class="ml-6 bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition">
-        Contact Us →
+   <a href="https://wa.me/6281944872700" target="_blank"
+         class="ml-6 bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition">
+            Contact Us →
     </a>
+
 
 </nav>
 
@@ -112,7 +109,7 @@ dengan destinasi terbaik dan guide profesional di Nusa Tenggara Barat.
 <ul class="space-y-2 text-sm text-white/80">
 <li>📍 Lombok, Nusa Tenggara Barat</li>
 <li>📧 info@jejaklangkah.id</li>
-<li>📞 +62 812-6102-8030</li>
+<li>📞 +62 819-4487-2700</li>
 </ul>
 </div>
 
