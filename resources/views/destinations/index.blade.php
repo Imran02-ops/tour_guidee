@@ -46,6 +46,7 @@
 
         @foreach($destinations as $d)
         <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+
             <a href="{{ route('destinations.show', $d->id) }}">
                 <div class="relative">
                     <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
@@ -63,6 +64,26 @@
                     </p>
                 </div>
             </a>
+
+            {{-- ===== MODE KELOLA ===== --}}
+            @if($manageMode)
+            <div class="flex justify-end gap-2 px-4 pb-4">
+                <button onclick="openEditModal({{ $d }});"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
+                    Ubah
+                </button>
+
+                <form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
+                      onsubmit="return confirm('Yakin hapus destinasi ini?')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
+                        Hapus
+                    </button>
+                </form>
+            </div>
+            @endif
+
         </div>
         @endforeach
 
@@ -77,7 +98,7 @@
 
 </section>
 
-{{-- ================= MODAL EDIT (hanya jika manage mode) ================= --}}
+{{-- ================= MODAL EDIT ================= --}}
 @if($manageMode)
 <div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
 <div class="bg-white rounded-xl p-6 w-full max-w-xl">
@@ -99,7 +120,6 @@
 </select>
 
 <textarea name="description" class="w-full border p-2 mb-3"></textarea>
-
 <input type="file" name="image" class="mb-3">
 
 <div class="flex justify-end gap-2">
