@@ -41,28 +41,45 @@
 
 @if($destinations->count())
 
-<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+<div class="max-w-7xl mx-auto px-6">
 
-@foreach($destinations as $d)
-<div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
 
-<a href="{{ route('destinations.show', $d->id) }}">
-<div class="relative">
-    <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
-    <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
-        {{ ucwords(str_replace('-', ' ', $d->category)) }}
-    </span>
+        @foreach($destinations as $d)
+            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+                
+                <a href="{{ route('destinations.show', $d->id) }}">
+                    <div class="relative">
+                        <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
+                        <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
+                            {{ ucwords(str_replace('-', ' ', $d->category)) }}
+                        </span>
+                    </div>
+
+                    <div class="p-4">
+                        <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
+                        <p class="text-sm text-gray-500">{{ $d->location }}</p>
+
+                        <p class="mt-2 font-semibold text-teal-700">
+                            Rp {{ number_format($d->price,0,',','.') }}
+                        </p>
+                    </div>
+                </a>
+
+            </div>
+        @endforeach
+
+    </div>
+
 </div>
 
-<div class="p-4">
-    <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
-    <p class="text-sm text-gray-500">{{ $d->location }}</p>
-
-    <p class="mt-2 font-semibold text-teal-700">
-        Rp {{ number_format($d->price,0,',','.') }}
-    </p>
+<div class="mt-12 flex justify-end px-6">
+    {{ $destinations->links() }}
 </div>
-</a>
+
+@endif
+
+</section>
 
 {{-- MODE KELOLA --}}
 @if($manageMode)
