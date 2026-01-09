@@ -42,35 +42,31 @@
 @if($destinations->count())
 
 <div class="max-w-7xl mx-auto px-6">
-
     <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
 
         @foreach($destinations as $d)
-            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
-                
-                <a href="{{ route('destinations.show', $d->id) }}">
-                    <div class="relative">
-                        <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
-                        <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
-                            {{ ucwords(str_replace('-', ' ', $d->category)) }}
-                        </span>
-                    </div>
+        <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+            <a href="{{ route('destinations.show', $d->id) }}">
+                <div class="relative">
+                    <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
+                    <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
+                        {{ ucwords(str_replace('-', ' ', $d->category)) }}
+                    </span>
+                </div>
 
-                    <div class="p-4">
-                        <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
-                        <p class="text-sm text-gray-500">{{ $d->location }}</p>
+                <div class="p-4">
+                    <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
+                    <p class="text-sm text-gray-500">{{ $d->location }}</p>
 
-                        <p class="mt-2 font-semibold text-teal-700">
-                            Rp {{ number_format($d->price,0,',','.') }}
-                        </p>
-                    </div>
-                </a>
-
-            </div>
+                    <p class="mt-2 font-semibold text-teal-700">
+                        Rp {{ number_format($d->price,0,',','.') }}
+                    </p>
+                </div>
+            </a>
+        </div>
         @endforeach
 
     </div>
-
 </div>
 
 <div class="mt-12 flex justify-end px-6">
@@ -81,41 +77,7 @@
 
 </section>
 
-{{-- MODE KELOLA --}}
-@if($manageMode)
-<div class="flex justify-end gap-2 px-4 pb-4">
-
-<button onclick="openEditModal({{ $d }});"
-    class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
-    Ubah
-</button>
-
-<form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
-      onsubmit="return confirm('Yakin hapus destinasi ini?')">
-    @csrf
-    @method('DELETE')
-    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
-        Hapus
-    </button>
-</form>
-
-</div>
-@endif
-
-</div>
-@endforeach
-
-</div>
-
-<div class="mt-12 flex justify-end">
-{{ $destinations->links() }}
-</div>
-
-@endif
-
-</section>
-
-{{-- ================= MODAL EDIT ================= --}}
+{{-- ================= MODAL EDIT (hanya jika manage mode) ================= --}}
 @if($manageMode)
 <div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
 <div class="bg-white rounded-xl p-6 w-full max-w-xl">
@@ -152,18 +114,18 @@
 
 <script>
 function openEditModal(data) {
-document.getElementById('editModal').classList.remove('hidden');
-let form = document.getElementById('editForm');
-form.action = `/destinations/${data.id}`;
-form.name.value = data.name;
-form.location.value = data.location;
-form.price.value = data.price;
-form.category.value = data.category;
-form.description.value = data.description;
+    document.getElementById('editModal').classList.remove('hidden');
+    let form = document.getElementById('editForm');
+    form.action = `/destinations/${data.id}`;
+    form.name.value = data.name;
+    form.location.value = data.location;
+    form.price.value = data.price;
+    form.category.value = data.category;
+    form.description.value = data.description;
 }
 
 function closeEditModal() {
-document.getElementById('editModal').classList.add('hidden');
+    document.getElementById('editModal').classList.add('hidden');
 }
 </script>
 
