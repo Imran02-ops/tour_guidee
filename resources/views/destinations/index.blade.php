@@ -38,15 +38,6 @@
 
 {{-- ================= KATALOG ================= --}}
 <section class="bg-gray-100 py-16">
-<div class="max-w-7xl mx-auto px-6">
-
-    <div class="flex justify-end mb-6">
-        <a href="{{ route('destinations.create') }}"
-           class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-full font-bold shadow transition">
-            <span class="text-xl">＋</span> Tambah Destinasi
-        </a>
-    </div>
-
     @if($destinations->count())
 
     <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
