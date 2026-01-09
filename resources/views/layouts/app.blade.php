@@ -44,6 +44,45 @@ body{background:#f3f4f6}
 }
 .nav-link:hover{color:#d1fae5}
 .nav-link:hover::after{width:100%}
+
+/* ===== PRO MOBILE NAVBAR ANIMATION ===== */
+#menu {
+    transition: transform .35s ease, opacity .35s ease;
+}
+#menu.closed {
+    transform: translateY(-15px);
+    opacity: 0;
+    pointer-events: none;
+}
+#menu.open {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#menuBtn span {
+    transition: all .3s ease;
+}
+#menuBtn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px,5px);
+}
+#menuBtn.open span:nth-child(2) {
+    opacity: 0;
+}
+#menuBtn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px,-6px);
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    backdrop-filter: blur(5px);
+    z-index: 40;
+    display: none;
+}
+.backdrop.show {
+    display: block;
+}
 </style>
 </head>
 
@@ -51,20 +90,27 @@ body{background:#f3f4f6}
 
 <!-- ================= NAVBAR ================= -->
 <header class="bg-[#0f3f3b] shadow-lg fixed top-0 left-0 w-full z-50">
-<div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-wrap md:flex-nowrap items-center justify-between">
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
 
-<div class="flex items-center gap-3 mb-3 md:mb-0">   
+<div class="flex items-center gap-3">   
     <img src="{{ asset('images/logo.png') }}" class="h-10 w-10 object-contain">
-    <span class="text-white text-xl md:text-2xl font-extrabold tracking-wide">JejakLangkah.id</span>
 </div>
 
-<nav class="w-full md:w-auto flex flex-col md:flex-row items-center gap-4 md:gap-8 text-white font-semibold">
+<button id="menuBtn" class="md:hidden flex flex-col gap-1.5 text-white">
+    <span class="w-7 h-0.5 bg-white"></span>
+    <span class="w-7 h-0.5 bg-white"></span>
+    <span class="w-7 h-0.5 bg-white"></span>
+</button>
+
+<nav id="menu" class="closed md:open absolute md:static top-full left-0 w-full md:w-auto bg-[#0f3f3b] md:bg-transparent 
+flex flex-col md:flex-row items-center gap-4 md:gap-8 text-white font-semibold py-6 md:py-0">
+
     <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'text-yellow-300' : '' }}">Home</a>
     <a href="{{ url('/profil-jejaklangkah') }}" class="nav-link {{ request()->is('profil-jejaklangkah') ? 'text-yellow-300' : '' }}">Profil</a>
     <a href="{{ url('/galeri-jejaklangkah') }}" class="nav-link {{ request()->is('galeri-jejaklangkah') ? 'text-yellow-300' : '' }}">Galeri</a>
     <a href="{{ url('/kontak-jejaklangkah') }}" class="nav-link {{ request()->is('kontak-jejaklangkah') ? 'text-yellow-300' : '' }}">Kontak</a>
     <a href="https://wa.me/6281944872700" target="_blank"
-       class="bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition mt-2 md:mt-0">
+       class="bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition">
        Contact Us →
     </a>
 </nav>
@@ -118,6 +164,44 @@ body{background:#f3f4f6}
 
 </div>
 </footer>
+
+<div id="backdrop" class="backdrop"></div>
+
+<script>
+const btn = document.getElementById('menuBtn');
+const menu = document.getElementById('menu');
+const backdrop = document.getElementById('backdrop');
+const links = menu.querySelectorAll('a');
+
+function openMenu(){
+    menu.classList.remove('closed');
+    menu.classList.add('open');
+    btn.classList.add('open');
+    backdrop.classList.add('show');
+    document.body.classList.add('overflow-hidden');
+}
+
+function closeMenu(){
+    menu.classList.add('closed');
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+    backdrop.classList.remove('show');
+    document.body.classList.remove('overflow-hidden');
+}
+
+btn.addEventListener('click', () => {
+    menu.classList.contains('open') ? closeMenu() : openMenu();
+});
+
+backdrop.addEventListener('click', closeMenu);
+links.forEach(link => link.addEventListener('click', closeMenu));
+
+let startY = 0;
+menu.addEventListener('touchstart', e => startY = e.touches[0].clientY);
+menu.addEventListener('touchmove', e => {
+    if (e.touches[0].clientY - startY > 80) closeMenu();
+});
+</script>
 
 </body>
 </html>
