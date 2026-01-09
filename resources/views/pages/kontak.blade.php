@@ -59,6 +59,18 @@ Contact Us →
 Kirim Pesan
 </button>
 
+<div class="max-w-5xl mx-auto px-8 pb-20">
+
+    <h3 class="text-3xl font-bold text-center mb-6">Peta NTB</h3>
+
+    <div class="rounded-2xl overflow-hidden shadow-xl">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126757.62056028241!2d116.096873!3d-8.652497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcdb2cf0b3e75ad%3A0xbceac64a3b33!2sNusa%20Tenggara%20Barat!5e0!3m2!1sid!2sid!4v1700000000000"
+            width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+    </div>
+</div>
+
 </form>
 
 </section>
