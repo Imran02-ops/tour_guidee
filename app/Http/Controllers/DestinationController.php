@@ -9,27 +9,29 @@ use Illuminate\Support\Facades\Storage;
 class DestinationController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Destination::query();
+{
+    $query = Destination::query();
 
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
-        }
-
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', "%{$request->search}%")
-                  ->orWhere('location', 'like', "%{$request->search}%")
-                  ->orWhere('description', 'like', "%{$request->search}%");
-            });
-        }
-
-        $destinations = $query->latest()->paginate(10)->withQueryString();
-        $categories   = Destination::$allowedCategories;
-
-        return view('destinations.index', compact('destinations', 'categories'))
-            ->with('activeCategory', $request->category);
+    if ($request->filled('category')) {
+        $query->where('category', $request->category);
     }
+
+    if ($request->filled('search')) {
+        $query->where(function ($q) use ($request) {
+            $q->where('name', 'like', "%{$request->search}%")
+              ->orWhere('location', 'like', "%{$request->search}%")
+              ->orWhere('description', 'like', "%{$request->search}%");
+        });
+    }
+
+    $destinations = $query->latest()->paginate(10)->withQueryString();
+    $categories   = Destination::$allowedCategories;
+
+    $manageMode = $request->boolean('manage');
+
+    return view('destinations.index', compact('destinations', 'categories', 'manageMode'))
+        ->with('activeCategory', $request->category);
+}
 
     public function create()
     {

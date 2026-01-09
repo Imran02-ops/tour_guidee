@@ -4,7 +4,7 @@
 
 {{-- ================= HEADER ================= --}}
 <section class="relative bg-cover bg-center min-h-[320px]"
-    style="background-image: url('{{ asset('images/bg-destination1.jpg') }}')">
+    style="background-image: url('{{ asset('images/gggg.png') }}')">
 
     <div class="absolute inset-0 bg-black/50"></div>
 
@@ -38,62 +38,68 @@
 
 {{-- ================= KATALOG ================= --}}
 <section class="bg-gray-100 py-16">
-    @if($destinations->count())
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+@if($destinations->count())
 
-        @foreach($destinations as $d)
-        <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
 
-            <a href="{{ route('destinations.show', $d->id) }}">
-                <div class="relative">
-                    <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
-                    <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
-                        {{ ucwords(str_replace('-', ' ', $d->category)) }}
-                    </span>
-                </div>
+@foreach($destinations as $d)
+<div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
 
-                <div class="p-4">
-                    <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
-                    <p class="text-sm text-gray-500">{{ $d->location }}</p>
-
-                    <div class="flex items-center justify-between mt-2">
-                        <p class="font-semibold text-teal-700">
-                            Rp {{ number_format($d->price,0,',','.') }}
-                        </p>
-
-                        <div class="flex gap-2">
-                            <button onclick="event.preventDefault(); openEditModal({{ $d }});"
-                                class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
-                                Ubah
-                            </button>
-
-                            <form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
-                                  onsubmit="event.preventDefault(); if(confirm('Yakin hapus destinasi ini?')) this.submit();">
-                                @csrf
-                                @method('DELETE')
-                                <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
-                                    Hapus
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        @endforeach
-
-    </div>
-
-    <div class="mt-12 flex justify-end">
-        {{ $destinations->links() }}
-    </div>
-
-    @endif
+<a href="{{ route('destinations.show', $d->id) }}">
+<div class="relative">
+    <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
+    <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
+        {{ ucwords(str_replace('-', ' ', $d->category)) }}
+    </span>
 </div>
+
+<div class="p-4">
+    <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
+    <p class="text-sm text-gray-500">{{ $d->location }}</p>
+
+    <p class="mt-2 font-semibold text-teal-700">
+        Rp {{ number_format($d->price,0,',','.') }}
+    </p>
+</div>
+</a>
+
+{{-- MODE KELOLA --}}
+@if($manageMode)
+<div class="flex justify-end gap-2 px-4 pb-4">
+
+<button onclick="openEditModal({{ $d }});"
+    class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
+    Ubah
+</button>
+
+<form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
+      onsubmit="return confirm('Yakin hapus destinasi ini?')">
+    @csrf
+    @method('DELETE')
+    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
+        Hapus
+    </button>
+</form>
+
+</div>
+@endif
+
+</div>
+@endforeach
+
+</div>
+
+<div class="mt-12 flex justify-end">
+{{ $destinations->links() }}
+</div>
+
+@endif
+
 </section>
 
 {{-- ================= MODAL EDIT ================= --}}
+@if($manageMode)
 <div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
 <div class="bg-white rounded-xl p-6 w-full max-w-xl">
 
@@ -118,29 +124,29 @@
 <input type="file" name="image" class="mb-3">
 
 <div class="flex justify-end gap-2">
-    <button type="button" onclick="closeEditModal()" class="px-4 py-2 border rounded">Batal</button>
-    <button class="bg-teal-600 text-white px-6 py-2 rounded">Simpan</button>
+<button type="button" onclick="closeEditModal()" class="px-4 py-2 border rounded">Batal</button>
+<button class="bg-teal-600 text-white px-6 py-2 rounded">Simpan</button>
 </div>
 
 </form>
 </div>
 </div>
+@endif
 
 <script>
 function openEditModal(data) {
-    document.getElementById('editModal').classList.remove('hidden');
-    let form = document.getElementById('editForm');
-    form.action = `/destinations/${data.id}`;
-
-    form.name.value = data.name;
-    form.location.value = data.location;
-    form.price.value = data.price;
-    form.category.value = data.category;
-    form.description.value = data.description;
+document.getElementById('editModal').classList.remove('hidden');
+let form = document.getElementById('editForm');
+form.action = `/destinations/${data.id}`;
+form.name.value = data.name;
+form.location.value = data.location;
+form.price.value = data.price;
+form.category.value = data.category;
+form.description.value = data.description;
 }
 
 function closeEditModal() {
-    document.getElementById('editModal').classList.add('hidden');
+document.getElementById('editModal').classList.add('hidden');
 }
 </script>
 
