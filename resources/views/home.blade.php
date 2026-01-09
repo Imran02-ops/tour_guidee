@@ -19,6 +19,7 @@ class="inline-block bg-white text-teal-700 px-8 py-4 rounded-full font-bold shad
 Explore Categories ↓
 </a>
 
+<!-- INFO BOX -->
 <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
 
 <a href="{{ route('destinations.index') }}"
@@ -49,9 +50,24 @@ class="glass-box flex items-center gap-4 px-6 py-5 hover:scale-105 transition">
 
 </div>
 
+<!-- SEARCH BAR (PINDAH KE BAWAH) -->
+<form action="{{ route('destinations.index') }}" method="GET"
+class="mt-10 flex w-full gap-3">
+
+<input type="text" name="search" placeholder="Cari pantai, gunung, budaya..."
+value="{{ request('search') }}"
+class="flex-1 px-6 py-3 rounded-full text-gray-800 focus:outline-none">
+
+<button class="bg-white text-teal-700 px-8 py-3 rounded-full font-bold shadow hover:bg-gray-200 transition">
+🔍 Search
+</button>
+
+</form>
+
 </div>
 </section>
 
+<!-- INTRO -->
 <section id="intro" class="bg-white py-20 px-10">
 <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
@@ -73,6 +89,7 @@ bersama tour guide profesional dari JejakLangkah.id
 </div>
 </section>
 
+<!-- KATEGORI -->
 <section class="bg-gray-100 py-20 px-10">
 <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">
 Kategori Wisata

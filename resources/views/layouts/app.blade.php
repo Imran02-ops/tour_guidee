@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>JejakLangkah.id</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
@@ -48,6 +49,7 @@ body{background:#f3f4f6}
 
 <body>
 
+<!-- ================= NAVBAR ================= -->
 <header class="bg-teal-700 shadow-lg fixed top-0 left-0 w-full z-50">
 <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
@@ -56,53 +58,60 @@ body{background:#f3f4f6}
     <span class="text-white text-2xl font-extrabold tracking-wide">JejakLangkah.id</span>
 </div>
 
-<nav class="flex gap-10 text-white font-semibold">
+<nav class="flex items-center gap-8 text-white font-semibold">
     <a href="/" class="nav-link">Home</a>
-    <a href="{{ route('destinations.index') }}" class="nav-link">Destinations</a>
+    <a href="/profil-aik-berik" class="nav-link">Profil</a>
+    <a href="/layanan-aik-berik" class="nav-link">Layanan</a>
+    <a href="/galeri-aik-berik" class="nav-link">Galeri</a>
+    <a href="/kontak-aik-berik" class="nav-link">Kontak</a>
+
+    <a href="/kontak-aik-berik"
+       class="ml-6 bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full shadow transition">
+       Contact Us →
+    </a>
 </nav>
 
 </div>
 </header>
 
+<!-- ================= CONTENT ================= -->
 <main class="pt-28">
 @yield('content')
 </main>
 
-<footer class="bg-teal-700 text-white mt-24">
-<div class="max-w-7xl mx-auto px-6 py-14">
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+<!-- ================= FOOTER ================= -->
+<footer class="bg-[#0E3B36] text-white mt-24">
+<div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
 
 <div>
-<h3 class="text-2xl font-bold mb-3">JejakLangkah.id</h3>
-<p class="text-sm text-teal-100">
-Platform wisata NTB terbaik dengan guide profesional.
+<h3 class="text-2xl font-bold mb-4">JejakLangkah.id</h3>
+<p class="text-sm leading-relaxed text-white/80">
+JejakLangkah.id adalah platform wisata digital yang menghubungkan wisatawan
+dengan destinasi terbaik dan guide profesional di Nusa Tenggara Barat.
 </p>
 </div>
 
 <div>
-<h4 class="font-semibold mb-3">Menu</h4>
-<ul class="space-y-2 text-teal-100">
-<li><a href="/" class="hover:text-white">Home</a></li>
-<li><a href="/destinations" class="hover:text-white">Destinations</a></li>
+<h4 class="font-semibold text-lg mb-4">Kontak Kami</h4>
+<ul class="space-y-2 text-sm text-white/80">
+<li>📍 Lombok, Nusa Tenggara Barat</li>
+<li>📧 info@jejaklangkah.id</li>
+<li>📞 +62 812-6102-8030</li>
 </ul>
 </div>
 
+<div class="flex flex-col justify-between">
 <div>
-<h4 class="font-semibold mb-3">Informasi</h4>
-<ul class="space-y-2 text-teal-100">
-<li>📍 Nusa Tenggara Barat</li>
-<li>📧 info@JejakLangkah.id</li>
-<li>📞 +62 819-4487-2700</li>
-</ul>
+<h4 class="font-semibold text-lg mb-4">Informasi</h4>
+<p class="text-sm text-white/80">
+Platform resmi promosi wisata dan layanan pemandu wisata lokal.
+</p>
 </div>
 
-</div>
-
-<div class="border-t border-teal-500 my-8"></div>
-
-<div class="text-center text-sm text-teal-100">
-© {{ date('Y') }} <b class="text-white">JejakLangkah.id</b>. All rights reserved.
+<p class="text-sm text-white/60 mt-8">
+© {{ date('Y') }} <span class="text-white font-semibold">JejakLangkah.id</span>  
+All rights reserved.
+</p>
 </div>
 
 </div>
