@@ -50,9 +50,6 @@
             <a href="{{ route('destinations.show', $d->id) }}">
                 <div class="relative">
                     <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
-                    <span class="absolute top-2 left-2 bg-teal-600 text-white text-xs px-3 py-1 rounded-full">
-                        {{ ucwords(str_replace('-', ' ', $d->category)) }}
-                    </span>
                 </div>
 
                 <div class="p-4">
@@ -97,6 +94,7 @@
 @endif
 
 </section>
+
 
 {{-- ================= MODAL EDIT ================= --}}
 @if($manageMode)
