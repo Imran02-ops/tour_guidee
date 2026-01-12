@@ -2,58 +2,102 @@
 
 @section('content')
 
-<section class="hero-bg flex items-center justify-center px-6 md:px-10 min-h-screen">
-<div class="glass-box max-w-5xl w-full p-8 md:p-12 text-white">
+{{-- ================= HERO CAROUSEL ================= --}}
+<section class="relative min-h-screen overflow-hidden">
 
-<h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-EXPLORE <br> THE WORLD
-</h1>
+    {{-- BACKGROUND IMAGES --}}
+    <div id="heroCarousel" class="absolute inset-0">
+        @php
+            $heroImages = [
+                'images/bg22.jpeg',
+                'images/gggg.png',
+                'images/categories/pantai1.jpg'
+            ];
+        @endphp
 
-<p class="text-base md:text-lg mb-8 max-w-2xl">
-Temukan destinasi wisata terbaik dengan tour guide profesional,
-rating tinggi, dan sistem booking mudah.
-</p>
+        @foreach($heroImages as $i => $img)
+            <div
+                class="hero-slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 {{ $i === 0 ? 'opacity-100' : 'opacity-0' }}"
+                style="background-image:url('{{ asset($img) }}')">
+            </div>
+        @endforeach
+    </div>
 
-<a href="#intro"
-class="inline-block bg-white text-teal-700 px-6 md:px-8 py-3 md:py-4 rounded-full font-bold shadow hover:bg-gray-200 transition">
-Explore Categories
-</a>
+    {{-- DARK OVERLAY --}}
+    <div class="absolute inset-0 bg-black/70"></div>
 
-<!-- INFO BOX -->
-<div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+    {{-- CONTENT --}}
+    <div class="relative z-10 min-h-screen flex items-center justify-center px-6 md:px-10">
+        <div class="w-full max-w-6xl text-center md:text-left text-green-400">
 
-<a href="{{ route('destinations.index') }}"
-class="glass-box flex items-center gap-4 px-6 py-5 hover:scale-105 transition">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                EXPLORE <br> THE WORLD
+            </h1>
 
-<div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-teal-100 flex items-center justify-center">
-📍
-</div>
+            <p class="text-base md:text-lg mb-8 max-w-2xl text-green-200">
+                Temukan destinasi wisata terbaik dengan tour guide profesional,
+                rating tinggi, dan sistem booking mudah.
+            </p>
 
-<div>
-<p class="text-lg md:text-xl font-bold text-white">50+ Destinasi Wisata</p>
-<p class="text-sm text-white/80">Pilihan terbaik di NTB</p>
-</div>
-</a>
+            {{-- SEARCH --}}
+            <form action="{{ route('destinations.index') }}" method="GET"
+                  class="flex flex-col md:flex-row gap-4 max-w-2xl mb-10">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Cari pantai, gunung, budaya..."
+                    class="flex-1 px-6 py-3 rounded-full text-gray-800 focus:outline-none">
 
-<a href="{{ route('guides.index') }}"
-class="glass-box flex items-center gap-4 px-6 py-5 hover:scale-105 transition">
+                <button
+                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-bold transition">
+                    🔍 Cari
+                </button>
+            </form>
 
-<div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-teal-100 flex items-center justify-center">
-🧭
-</div>
+            {{-- INFO BOX --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
 
-<div>
-<h3 class="text-base md:text-lg font-bold text-white">Guide Profesional</h3>
-<p class="text-sm text-white/80">Berpengalaman & terpercaya</p>
-</div>
-</a>
+                <a href="{{ route('destinations.index') }}"
+                   class="bg-black/50 border border-green-500 rounded-2xl flex items-center gap-4 px-6 py-5 hover:scale-105 transition">
 
-</div>
+                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-green-600 flex items-center justify-center text-white">
+                        📍
+                    </div>
 
-</div>
+                    <div>
+                        <p class="text-lg md:text-xl font-bold text-green-300">
+                            50+ Destinasi Wisata
+                        </p>
+                        <p class="text-sm text-green-200">
+                            Pilihan terbaik di NTB
+                        </p>
+                    </div>
+                </a>
+
+                <a href="{{ route('guides.index') }}"
+                   class="bg-black/50 border border-green-500 rounded-2xl flex items-center gap-4 px-6 py-5 hover:scale-105 transition">
+
+                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-green-600 flex items-center justify-center text-white">
+                        🧭
+                    </div>
+
+                    <div>
+                        <h3 class="text-base md:text-lg font-bold text-green-300">
+                            Guide Profesional
+                        </h3>
+                        <p class="text-sm text-green-200">
+                            Berpengalaman & terpercaya
+                        </p>
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
 </section>
 
-<!-- INTRO -->
+{{-- ================= INTRO ================= --}}
 <section id="intro" class="bg-white py-20 px-6 md:px-10">
 <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
@@ -75,7 +119,7 @@ bersama tour guide profesional dari JejakLangkah.id
 </div>
 </section>
 
-<!-- KATEGORI -->
+{{-- ================= KATEGORI ================= --}}
 <section class="bg-gray-100 py-20 px-6 md:px-10">
 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
 Kategori Wisata
@@ -111,5 +155,21 @@ class="h-40 md:h-48 w-full object-cover group-hover:scale-110 transition">
 
 </div>
 </section>
+
+{{-- ================= HERO CAROUSEL SCRIPT ================= --}}
+<script>
+const slides = document.querySelectorAll('.hero-slide');
+let current = 0;
+
+setInterval(() => {
+    slides[current].classList.remove('opacity-100');
+    slides[current].classList.add('opacity-0');
+
+    current = (current + 1) % slides.length;
+
+    slides[current].classList.remove('opacity-0');
+    slides[current].classList.add('opacity-100');
+}, 2000);
+</script>
 
 @endsection

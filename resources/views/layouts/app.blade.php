@@ -99,7 +99,7 @@ class="hidden absolute top-full left-0 w-full bg-[#0f3f3b] z-40
 </header>
 
 <!-- ================= CONTENT ================= -->
-<main class="pt-28">
+<main class="pt-[76px] md:pt-[80px]">
 @yield('content')
 </main>
 

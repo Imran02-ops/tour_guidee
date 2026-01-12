@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DestinationController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request) 
 {
     $query = Destination::query();
 
@@ -26,7 +26,7 @@ class DestinationController extends Controller
 
     $destinations = $query->latest()->paginate(10)->withQueryString();
     $categories   = Destination::$allowedCategories;
-
+  
     $manageMode = $request->boolean('manage');
 
     return view('destinations.index', compact('destinations', 'categories', 'manageMode'))
@@ -80,7 +80,7 @@ class DestinationController extends Controller
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($destination->image);
-
+ 
             $fileName = time().'_'.$request->image->getClientOriginalName();
             $validated['image'] = $request->image->storeAs('destinations', $fileName, 'public');
         }

@@ -9,7 +9,7 @@
 Tambah Destinasi Wisata
 </h2>
 
-<form action="{{ route('destinations.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+<form action="{{ route('destinations.stor  e') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
 @csrf
 
 {{-- Nama --}}
