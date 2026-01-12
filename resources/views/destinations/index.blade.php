@@ -2,12 +2,12 @@
 
 @php
 $heroImages = [
-'Pantai' => ['pantai1.jpg','pantai2.jpg','pantai3.jpg'],
-'Pegunungan Bukit' => ['gunung1.jpg','gunung2.jpg','gunung3.jpg'],
+'Pantai' => ['pantai1.jpg','pantai2.jpeg','pantai3.jpeg'],
+'Pegunungan Bukit' => ['gunung1.jpeg','gunung2.jpeg','gunung3.jpeg'],
 'Wisata Alam' => ['alam1.jpg','alam2.jpg','alam3.jpg'],
 'Wisata Religi' => ['religi1.jpg','religi2.jpg','religi3.jpg'],
 'Wisata Tradisional' => ['tradisi1.jpg','tradisi2.jpg','tradisi3.jpg'],
-'Semua' => ['hero1.jpg','hero2.jpg','hero2.jpg']
+'Semua' => ['hero1.jpg','hero2.jpg','hero3.jpg']
 ];
 
 $active = ucwords(str_replace('-', ' ', $activeCategory ?? 'Semua'));
@@ -17,8 +17,7 @@ $images = $heroImages[$active] ?? $heroImages['Semua'];
 @section('content')
 
 {{-- ================= HERO ================= --}}
-<section class="relative h-[380px] overflow-hidden">
-
+<section class="relative h-[520px] md:h-[600px] overflow-hidden">
 <div id="heroWrapper" class="absolute inset-0">
 @foreach($images as $i => $img)
 <div class="hero-slide {{ $i === 0 ? 'active' : '' }}"
@@ -28,12 +27,21 @@ style="background-image:url('{{ asset('images/hero/'.$img) }}')"></div>
 
 <div class="absolute inset-0 bg-black/50"></div>
 
+{{-- Gradient Vignette --}}
+<div class="absolute bottom-0 left-0 w-full h-40
+bg-gradient-to-t from-gray-100 via-gray-100/70 to-transparent"></div>
+
 <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
-<div class="backdrop-blur-xl bg-white/20 rounded-3xl px-10 py-10 max-w-4xl animate-fadeIn">
-<h1 class="text-4xl md:text-5xl font-extrabold text-white mb-3">
+<div class="backdrop-blur-xl bg-white/20 rounded-3xl px-10 py-10 max-w-4xl">
+
+<h1 id="heroTitle" class="text-4xl md:text-5xl font-extrabold text-white mb-3 opacity-0">
 {{ $active === 'Semua' ? 'Semua Destinasi Wisata' : $active }}
 </h1>
-<p class="text-white/80">Temukan pengalaman wisata terbaik di NTB</p>
+
+<p id="heroSub" class="text-white/80 opacity-0">
+Temukan pengalaman wisata terbaik di NTB
+</p>
+
 </div>
 </div>
 </section>
@@ -132,8 +140,7 @@ onsubmit="return confirm('Yakin hapus destinasi ini?')">
 {{-- ================= STYLE ================= --}}
 <style>
 .hero-slide{
-position:absolute;
-inset:0;
+position:absolute; inset:0;
 background-size:cover;
 background-position:center;
 opacity:0;
@@ -146,30 +153,13 @@ filter:blur(0);
 z-index:2;
 }
 
-.filter-item{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:.4rem;
-position:relative;
-color:#9ca3af;
-transition:.3s;
-}
+.filter-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative;color:#9ca3af;transition:.3s;}
 .filter-item i{font-size:2.2rem;}
 .filter-item:hover{color:#0f766e;}
 .filter-item.active{color:#0f766e;}
 .filter-item.active i{transform:scale(1.25);}
-.filter-item .underline{
-height:3px;
-width:0;
-background:#0f766e;
-border-radius:999px;
-transition:.3s;
-}
+.filter-item .underline{height:3px;width:0;background:#0f766e;border-radius:999px;transition:.3s;}
 .filter-item.active .underline{width:100%;}
-
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.animate-fadeIn{animation:fadeIn 1s ease;}
 
 @keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 .animate-slideUp{animation:slideUp .8s ease;}
@@ -188,6 +178,31 @@ slides[current].classList.remove('active');
 current = (current + 1) % slides.length;
 slides[current].classList.add('active');
 }, 4500);
+
+// === TEXT WORD ANIMATION ===
+function animateText(el){
+const words = el.innerText.split(' ');
+el.innerHTML = '';
+words.forEach((word,i)=>{
+let span = document.createElement('span');
+span.innerText = word + ' ';
+span.style.opacity = 0;
+span.style.transition = 'all .6s ease';
+span.style.display = 'inline-block';
+span.style.transform = 'translateY(10px)';
+el.appendChild(span);
+
+setTimeout(()=>{
+span.style.opacity = 1;
+span.style.transform = 'translateY(0)';
+}, i * 120);
+});
+}
+
+window.addEventListener('load',()=>{
+animateText(document.getElementById('heroTitle'));
+animateText(document.getElementById('heroSub'));
+});
 </script>
 
 @endsection
