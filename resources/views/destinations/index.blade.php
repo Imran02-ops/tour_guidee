@@ -3,148 +3,137 @@
 @section('content')
 
 {{-- ================= HEADER ================= --}}
-<section class="relative bg-cover bg-center min-h-[320px]"
-    style="background-image: url('{{ asset('images/gggg.png') }}')">
+<section class="relative bg-cover bg-center min-h-[340px]"
+style="background-image:url('{{ asset('images/gggg.png') }}')">
 
-    <div class="absolute inset-0 bg-black/50"></div>
+<div class="absolute inset-0 bg-black/60"></div>
 
-    <div class="relative z-10 flex items-center justify-center min-h-[320px] px-6">
-        <div class="backdrop-blur-md bg-white/20 rounded-2xl px-10 py-10 text-center max-w-5xl w-full">
+<div class="relative z-10 flex items-center justify-center min-h-[340px] px-6">
+<div class="backdrop-blur-xl bg-white/20 rounded-3xl px-10 py-10 text-center max-w-6xl w-full animate-fadeIn">
 
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                Semua Destinasi Wisata
-            </h1>
+<h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-wide">
+Semua Destinasi Wisata
+</h1>
 
-            {{-- FILTER --}}
-            <div class="flex flex-wrap justify-center gap-3">
-                <a href="{{ route('destinations.index') }}"
-                   class="px-6 py-2 rounded-full font-semibold transition
-                   {{ empty($activeCategory) ? 'bg-white text-teal-700' : 'bg-teal-600 text-white hover:bg-teal-500' }}">
-                    Semua
-                </a>
+<p class="text-white/80 mb-8">Temukan pengalaman wisata terbaik di NTB</p>
 
-                @foreach($categories as $cat)
-                    <a href="{{ route('destinations.index', ['category' => $cat]) }}"
-                       class="px-6 py-2 rounded-full font-semibold capitalize transition
-                       {{ $activeCategory === $cat ? 'bg-white text-teal-700' : 'bg-teal-600 text-white hover:bg-teal-500' }}">
-                        {{ ucwords(str_replace('-', ' ', $cat)) }}
-                    </a>
-                @endforeach
-            </div>
-
-        </div>
-    </div>
+</div>
+</div>
 </section>
 
-{{-- ================= KATALOG ================= --}}
+{{-- ================= BODY ================= --}}
 <section class="bg-gray-100 py-16">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-10">
 
+{{-- ===== SIDEBAR KATEGORI ===== --}}
+<div class="md:col-span-2 space-y-4 sticky top-24 h-fit animate-slideUp">
+
+@php
+$icons = [
+'Pantai' => 'bx-water',
+'Pegunungan Bukit' => 'bx-landscape',
+'Wisata Alam' => 'bx-leaf',
+'Wisata Religi' => 'bx-mosque',
+'Wisata Tradisional' => 'bx-home-heart'
+];
+@endphp
+
+<a href="{{ route('destinations.index') }}"
+class="flex items-center gap-3 p-4 rounded-xl font-semibold transition
+{{ empty($activeCategory) ? 'bg-teal-600 text-white' : 'bg-white hover:bg-teal-50' }}">
+<i class='bx bx-grid-alt text-xl'></i> Semua
+</a>
+
+@foreach($categories as $cat)
+<a href="{{ route('destinations.index',['category'=>$cat]) }}"
+class="flex items-center gap-3 p-4 rounded-xl font-semibold capitalize transition
+{{ $activeCategory === $cat ? 'bg-teal-600 text-white' : 'bg-white hover:bg-teal-50' }}">
+<i class='bx {{ $icons[ucwords(str_replace('-',' ',$cat))] ?? 'bx-map' }} text-xl'></i>
+{{ ucwords(str_replace('-',' ',$cat)) }}
+</a>
+@endforeach
+</div>
+
+{{-- ===== KATALOG ===== --}}
+<div class="md:col-span-10">
 @if($destinations->count())
 
-<div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
 
-        @foreach($destinations as $d)
-        <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+@foreach($destinations as $d)
+<div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden
+transform hover:-translate-y-2 duration-500 group animate-scaleUp">
 
-            <a href="{{ route('destinations.show', $d->id) }}">
-                <div class="relative">
-                    <img src="{{ asset('storage/'.$d->image) }}" class="h-44 w-full object-cover">
-                </div>
+<a href="{{ route('destinations.show',$d->id) }}">
+<div class="relative overflow-hidden">
+<img src="{{ asset('storage/'.$d->image) }}"
+class="h-48 w-full object-cover group-hover:scale-110 transition duration-700">
 
-                <div class="p-4">
-                    <h3 class="font-bold text-base mb-1">{{ $d->name }}</h3>
-                    <p class="text-sm text-gray-500">{{ $d->location }}</p>
-
-                    <p class="mt-2 font-semibold text-teal-700">
-                        Rp {{ number_format($d->price,0,',','.') }}
-                    </p>
-                </div>
-            </a>
-
-            {{-- ===== MODE KELOLA ===== --}}
-            @if($manageMode)
-            <div class="flex justify-end gap-2 px-4 pb-4">
-                <button onclick="openEditModal({{ $d }});"
-                    class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
-                    Ubah
-                </button>
-
-                <form action="{{ route('destinations.destroy', $d->id) }}" method="POST"
-                      onsubmit="return confirm('Yakin hapus destinasi ini?')">
-                    @csrf
-                    @method('DELETE')
-                    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
-                        Hapus
-                    </button>
-                </form>
-            </div>
-            @endif
-
-        </div>
-        @endforeach
-
-    </div>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition"></div>
 </div>
 
-<div class="mt-12 flex justify-end px-6">
-    {{ $destinations->links() }}
+<div class="p-5">
+<h3 class="font-bold text-lg mb-1">{{ $d->name }}</h3>
+<p class="text-sm text-gray-500">{{ $d->location }}</p>
+
+<p class="mt-3 font-semibold text-teal-700">
+Rp {{ number_format($d->price,0,',','.') }}
+</p>
 </div>
+</a>
 
-@endif
-
-</section>
-
-
-{{-- ================= MODAL EDIT ================= --}}
 @if($manageMode)
-<div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
-<div class="bg-white rounded-xl p-6 w-full max-w-xl">
+<div class="flex justify-end gap-2 px-5 pb-5">
+<button onclick="openEditModal({{ $d }});"
+class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full">
+Ubah
+</button>
 
-<h3 class="text-xl font-bold mb-4">Ubah Destinasi</h3>
-
-<form id="editForm" method="POST" enctype="multipart/form-data">
-@csrf
-@method('PUT')
-
-<input type="text" name="name" class="w-full border p-2 mb-3">
-<input type="text" name="location" class="w-full border p-2 mb-3">
-<input type="number" name="price" class="w-full border p-2 mb-3">
-
-<select name="category" class="w-full border p-2 mb-3">
-@foreach($categories as $cat)
-<option value="{{ $cat }}">{{ ucwords(str_replace('-', ' ', $cat)) }}</option>
-@endforeach
-</select>
-
-<textarea name="description" class="w-full border p-2 mb-3"></textarea>
-<input type="file" name="image" class="mb-3">
-
-<div class="flex justify-end gap-2">
-<button type="button" onclick="closeEditModal()" class="px-4 py-2 border rounded">Batal</button>
-<button class="bg-teal-600 text-white px-6 py-2 rounded">Simpan</button>
-</div>
-
+<form action="{{ route('destinations.destroy',$d->id) }}" method="POST"
+onsubmit="return confirm('Yakin hapus destinasi ini?')">
+@csrf @method('DELETE')
+<button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full">
+Hapus
+</button>
 </form>
 </div>
-</div>
 @endif
 
-<script>
-function openEditModal(data) {
-    document.getElementById('editModal').classList.remove('hidden');
-    let form = document.getElementById('editForm');
-    form.action = `/destinations/${data.id}`;
-    form.name.value = data.name;
-    form.location.value = data.location;
-    form.price.value = data.price;
-    form.category.value = data.category;
-    form.description.value = data.description;
-}
+</div>
+@endforeach
+</div>
 
-function closeEditModal() {
-    document.getElementById('editModal').classList.add('hidden');
+<div class="mt-12 flex justify-end">
+{{ $destinations->links() }}
+</div>
+
+@else
+<p class="text-center text-gray-500">Destinasi tidak ditemukan.</p>
+@endif
+</div>
+
+</div>
+</section>
+
+{{-- ================= ANIMATIONS ================= --}}
+<style>
+@keyframes fadeIn {
+from { opacity:0; transform:translateY(20px); }
+to { opacity:1; transform:translateY(0); }
 }
-</script>
+.animate-fadeIn { animation: fadeIn 1s ease forwards; }
+
+@keyframes slideUp {
+from { opacity:0; transform:translateY(40px); }
+to { opacity:1; transform:translateY(0); }
+}
+.animate-slideUp { animation: slideUp 1s ease forwards; }
+
+@keyframes scaleUp {
+from { opacity:0; transform:scale(.9); }
+to { opacity:1; transform:scale(1); }
+}
+.animate-scaleUp { animation: scaleUp .8s ease forwards; }
+</style>
 
 @endsection
