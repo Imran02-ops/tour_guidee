@@ -21,37 +21,38 @@ Semua Destinasi Wisata
 <section class="bg-gray-100 py-16">
 <div class="max-w-7xl mx-auto px-6">
 
-{{-- ===== FILTER ICON ===== --}}
+{{-- ===== ICON FILTER ===== --}}
 @php
 $iconMap = [
 'Pantai' => 'bx-water',
-'Pegunungan Bukit' => 'bx-landscape',
+'Pegunungan Bukit' => 'bx-mountain',
 'Wisata Alam' => 'bx-leaf',
 'Wisata Religi' => 'bx-mosque',
 'Wisata Tradisional' => 'bx-home-heart'
 ];
 @endphp
 
-<div class="flex flex-wrap justify-center gap-4 mb-12 animate-slideUp">
+<div class="flex justify-center gap-12 mb-16 animate-slideUp">
 
-<a href="{{ route('destinations.index') }}"
-class="group flex flex-col items-center justify-center w-24 h-24 rounded-2xl shadow transition
-{{ empty($activeCategory) ? 'bg-teal-600 text-white' : 'bg-white hover:bg-teal-50' }}">
-<i class='bx bx-grid-alt text-3xl mb-1'></i>
-<span class="text-sm font-semibold">Semua</span>
+{{-- SEMUA --}}
+<a href="{{ route('destinations.index') }}" class="filter-item {{ empty($activeCategory) ? 'active' : '' }}">
+<i class='bx bx-grid-alt'></i>
+<span>Semua</span>
+<div class="underline"></div>
 </a>
 
 @foreach($categories as $cat)
 @php
 $label = ucwords(str_replace('-', ' ', $cat));
 $icon  = $iconMap[$label] ?? 'bx-map';
+$active = $activeCategory === $cat;
 @endphp
 
 <a href="{{ route('destinations.index',['category'=>$cat]) }}"
-class="group flex flex-col items-center justify-center w-24 h-24 rounded-2xl shadow transition
-{{ $activeCategory === $cat ? 'bg-teal-600 text-white' : 'bg-white hover:bg-teal-50' }}">
-<i class='bx {{ $icon }} text-3xl mb-1'></i>
-<span class="text-sm font-semibold text-center leading-tight">{{ $label }}</span>
+class="filter-item {{ $active ? 'active' : '' }}">
+<i class='bx {{ $icon }}'></i>
+<span>{{ $label }}</span>
+<div class="underline"></div>
 </a>
 @endforeach
 
@@ -107,27 +108,49 @@ onsubmit="return confirm('Yakin hapus destinasi ini?')">
 </div>
 </section>
 
-{{-- ================= ANIMATIONS ================= --}}
+{{-- ================= STYLE ================= --}}
 <style>
-@keyframes fadeIn {
-from {opacity:0; transform:translateY(20px);}
-to {opacity:1; transform:translateY(0);}
+.filter-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:.4rem;
+position:relative;
+color:#9ca3af;
+transition:.3s;
+}
+.filter-item i{font-size:2.2rem;}
+.filter-item:hover{color:#0f766e;}
+.filter-item.active{color:#0f766e;}
+.filter-item.active i{transform:scale(1.25);}
+.filter-item .underline{
+height:3px;
+width:0;
+background:#0f766e;
+border-radius:999px;
+transition:.3s;
+}
+.filter-item.active .underline{
+width:100%;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 .animate-fadeIn{animation:fadeIn 1s ease;}
 
-@keyframes slideUp {
-from {opacity:0; transform:translateY(40px);}
-to {opacity:1; transform:translateY(0);}
+@keyframes slideUp{
+from{opacity:0; transform:translateY(30px);}
+to{opacity:1; transform:translateY(0);}
 }
-.animate-slideUp{animation:slideUp 1s ease;}
+.animate-slideUp{animation:slideUp .8s ease;}
 
-@keyframes scaleUp {
-from {opacity:0; transform:scale(.9);}
-to {opacity:1; transform:scale(1);}
+@keyframes scaleUp{
+from{opacity:0; transform:scale(.9);}
+to{opacity:1; transform:scale(1);}
 }
 .animate-scaleUp{animation:scaleUp .7s ease;}
-
-.group:hover i{transform:scale(1.15); transition:.3s;}
 </style>
 
 @endsection
