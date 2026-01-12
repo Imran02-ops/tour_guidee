@@ -40,13 +40,6 @@ Tambah Destinasi Wisata
     </select>
 </div>
 
-{{-- Harga --}}
-<div>
-    <label class="block font-semibold mb-1">Harga (Rp)</label>
-    <input type="number" name="price" value="{{ old('price') }}" required
-        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500">
-</div>
-
 {{-- Deskripsi --}}
 <div>
     <label class="block font-semibold mb-1">Deskripsi</label>

@@ -58,9 +58,24 @@ class DestinationController extends Controller
     }
 
     public function show(Destination $destination)
-    {
-        return view('destinations.show', compact('destination'));
-    }
+{
+    $destinations = Destination::orderBy('id')->get();
+
+    $index = $destinations->search(fn ($d) => $d->id == $destination->id) + 1;
+
+    $prev = $destinations->where('id', '<', $destination->id)->last();
+    $next = $destinations->where('id', '>', $destination->id)->first();
+
+    $total = $destinations->count();
+
+    return view('destinations.show', compact(
+        'destination',
+        'prev',
+        'next',
+        'index',
+        'total'
+    ));
+}
 
     public function edit(Destination $destination)
     {
