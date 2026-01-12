@@ -182,7 +182,7 @@
 
 <div id="heroCarousel" class="absolute inset-0">
 @php
-$heroImages=['images/bg22.jpeg','images/gggg.png','images/categories/pantai1.jpg'];
+$heroImages=['images/bg22.jpeg','images/hero.jpg','images/gunung1.jpeg'];
 @endphp
 @foreach($heroImages as $i=>$img)
 <div class="hero-slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 {{ $i==0?'opacity-100':'opacity-0' }}"
@@ -205,13 +205,17 @@ rating tinggi, dan sistem booking mudah.
 </p>
 
 <form action="{{ route('destinations.index') }}" method="GET"
-class="search-float flex items-center w-full max-w-2xl mb-10 bg-white rounded-full overflow-hidden shadow-lg">
+class="search-float flex items-center w-full max-w-xl mb-10
+bg-white rounded-full shadow-lg
+px-2 py-1">
 
-<input name="search" placeholder="Cari destinasi wisata..."
-class="flex-1 px-6 py-3 text-gray-700 focus:outline-none">
+<input name="search"
+placeholder="Cari destinasi wisata..."
+class="flex-1 px-6 py-3 text-gray-700 focus:outline-none bg-transparent">
 
-<button class="hero-btn bg-yellow-400 hover:bg-yellow-500 px-8 py-3 font-bold text-black flex items-center gap-2">
-🔍 Cari
+<button class="hero-btn bg-yellow-400 hover:bg-yellow-500
+text-black font-bold px-7 py-2 rounded-full transition">
+Cari
 </button>
 </form>
 

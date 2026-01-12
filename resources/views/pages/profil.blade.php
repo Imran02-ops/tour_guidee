@@ -109,10 +109,11 @@ grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
 }
 
 .vm-card-premium {
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.9);
     backdrop-filter: blur(10px);
     border-radius: 22px;
     padding: 34px;
+    border: 3px solid #0f766e;   /* GARIS TEPI HIJAU BRAND */
     box-shadow: 0 30px 60px rgba(0,0,0,0.08);
 }
 

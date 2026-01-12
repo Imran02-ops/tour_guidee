@@ -33,16 +33,47 @@ body{background:#f3f4f6}
     transform:translateY(0);
 }
 
+/* ===== FOOTER CTA PREMIUM ===== */
+.footer-cta{
+    animation:ctaFloat 6s ease-in-out infinite;
+    position:relative;
+    overflow:hidden;
+}
+@keyframes ctaFloat{
+    0%,100%{transform:translate(-50%,0)}
+    50%{transform:translate(-50%,-8px)}
+}
+.footer-cta::before{
+    content:"";
+    position:absolute;
+    inset:-60%;
+    background:radial-gradient(circle at center, rgba(255,255,255,.18), transparent 60%);
+    animation:ctaGlow 8s linear infinite;
+}
+@keyframes ctaGlow{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+.footer-cta:hover{
+    transform:translate(-50%,-12px) scale(1.02);
+    box-shadow:0 30px 60px rgba(0,0,0,.35);
+    transition:.4s;
+}
+
+/* ===== PULSE BUTTON ===== */
+.pulse-btn{
+    animation:pulse 2.2s infinite;
+}
+@keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(253,224,71,.7)}
+    70%{box-shadow:0 0 0 18px rgba(253,224,71,0)}
+    100%{box-shadow:0 0 0 0 rgba(253,224,71,0)}
+}
+
 /* ===== NAVBAR ===== */
 #navbar{transition:.4s}
-.navbar-transparent{
-    background:rgba(0,0,0,.15);
-    backdrop-filter:blur(6px);
-}
-.navbar-colored{
-    background:#0f3f3b;
-    box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
+.navbar-transparent{background:rgba(0,0,0,.15);backdrop-filter:blur(6px)}
+.navbar-colored{background:#0f3f3b;box-shadow:0 10px 25px rgba(0,0,0,.25)}
 
 /* ===== MENU SLIDE IN ===== */
 .nav-item{
@@ -96,11 +127,7 @@ body{background:#f3f4f6}
     overflow:hidden;
     z-index:100;
 }
-.nav-preview img{
-    width:100%;
-    height:140px;
-    object-fit:cover;
-}
+.nav-preview img{width:100%;height:140px;object-fit:cover}
 .nav-preview span{
     display:block;
     padding:10px;
@@ -134,32 +161,32 @@ body{background:#f3f4f6}
 <a href="{{ url('/') }}" class="nav-item nav-link {{ request()->is('/') ? 'text-yellow-300' : '' }}">
 Home
 <div class="nav-preview">
-    <img src="{{ asset('images/preview/home.png') }}">
-    <span>Beranda JejakLangkah</span>
+<img src="{{ asset('images/preview/home.png') }}">
+<span>Beranda JejakLangkah</span>
 </div>
 </a>
 
 <a href="{{ url('/profil-jejaklangkah') }}" class="nav-item nav-link {{ request()->is('profil-jejaklangkah') ? 'text-yellow-300' : '' }}">
 Profil
 <div class="nav-preview">
-    <img src="{{ asset('images/preview/profil.png') }}">
-    <span>Tentang JejakLangkah</span>
+<img src="{{ asset('images/preview/profil.png') }}">
+<span>Profil JejakLangkah</span>
 </div>
 </a>
 
 <a href="{{ url('/galeri-jejaklangkah') }}" class="nav-item nav-link {{ request()->is('galeri-jejaklangkah') ? 'text-yellow-300' : '' }}">
 Galeri
 <div class="nav-preview">
-    <img src="{{ asset('images/preview/galeri.png') }}">
-    <span>Koleksi Destinasi</span>
+<img src="{{ asset('images/preview/galeri.png') }}">
+<span>Moment</span>
 </div>
 </a>
 
 <a href="{{ url('/kontak-jejaklangkah') }}" class="nav-item nav-link {{ request()->is('kontak-jejaklangkah') ? 'text-yellow-300' : '' }}">
 Kontak
 <div class="nav-preview">
-    <img src="{{ asset('images/preview/kontak.png') }}">
-    <span>Hubungi Kami</span>
+<img src="{{ asset('images/preview/kontak.png') }}">
+<span>Hubungi Kami</span>
 </div>
 </a>
 
@@ -198,7 +225,7 @@ Contact Us →
 <!-- ================= FOOTER ================= -->
 <footer class="footer-animate bg-[#0f3d3a] text-white mt-32 relative">
 
-<div class="absolute left-1/2 -top-16 transform -translate-x-1/2 bg-green-700 
+<div class="footer-cta absolute left-1/2 -top-16 transform -translate-x-1/2 bg-green-700 
 rounded-2xl px-6 md:px-10 py-6 shadow-xl flex flex-col md:flex-row items-center gap-6 w-[90%] max-w-5xl">
 
 <h3 class="text-base md:text-lg font-bold flex-1 text-center md:text-left">
@@ -206,7 +233,7 @@ Mulailah Perjalanan Yang Tak Terlupakan! Jelajahi Permata Tersembunyi JejakLangk
 </h3>
 
 <a href="https://wa.me/6281944872700" target="_blank"
-class="bg-yellow-400 text-black px-6 py-2 rounded-full font-semibold shadow hover:bg-yellow-300 transition">
+class="pulse-btn bg-yellow-400 text-black px-6 py-2 rounded-full font-semibold shadow hover:bg-yellow-300 transition">
 Hubungi Kami →
 </a>
 </div>
