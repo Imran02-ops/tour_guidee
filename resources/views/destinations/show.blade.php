@@ -4,26 +4,26 @@
 
 <div id="overlay"
 class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md
-flex items-center justify-center px-4">
+flex items-center justify-center px-3 sm:px-4 py-6">
 
 <div id="modal"
 class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900
-rounded-3xl shadow-2xl w-full max-w-6xl overflow-hidden
+rounded-3xl shadow-2xl w-full max-w-6xl max-h-[92vh] overflow-hidden
 grid grid-cols-1 md:grid-cols-2 animate-zoomIn">
 
 {{-- IMAGE --}}
 <div class="relative overflow-hidden group">
 <img src="{{ asset('storage/'.$destination->image) }}"
-class="w-full h-[520px] object-cover transition duration-700 group-hover:scale-105">
+class="w-full h-[240px] sm:h-[360px] md:h-[520px] object-cover transition duration-700 group-hover:scale-105">
 <div class="absolute inset-0 bg-black/20"></div>
 </div>
 
 {{-- INFO --}}
-<div class="p-8 md:p-10 text-white flex flex-col justify-between">
+<div class="p-6 sm:p-8 md:p-10 text-white flex flex-col justify-between overflow-y-auto">
 
 <div>
 <div class="flex items-start justify-between mb-4">
-<h2 class="text-4xl font-extrabold leading-tight">
+<h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight">
 {{ $destination->name }}
 </h2>
 
@@ -42,7 +42,7 @@ bg-white/10 hover:bg-white/20 transition text-xl">✕</a>
 {{ $destination->description }}
 </p>
 
-<p class="text-2xl font-bold text-teal-400 mb-6">
+<p class="text-xl sm:text-2xl font-bold text-teal-400 mb-6">
 Rp {{ number_format($destination->price,0,',','.') }}
 </p>
 
@@ -50,12 +50,12 @@ Rp {{ number_format($destination->price,0,',','.') }}
 <div class="rounded-xl overflow-hidden shadow-lg border border-white/10">
 <iframe
 src="https://www.google.com/maps?q={{ urlencode($destination->location) }}&output=embed"
-class="w-full h-48" style="border:0;" allowfullscreen loading="lazy"></iframe>
+class="w-full h-40 sm:h-48" style="border:0;" allowfullscreen loading="lazy"></iframe>
 </div>
 </div>
 
 {{-- NAV --}}
-<div class="flex items-center justify-between pt-6 border-t border-white/10">
+<div class="flex items-center justify-between pt-6 border-t border-white/10 mt-6">
 
 @if($prev)
 <a href="{{ route('destinations.show',$prev->id) }}" 
@@ -99,6 +99,10 @@ background:rgba(255,255,255,.12);
 transition:.3s; font-weight:600;
 }
 .nav-btn:hover{background:rgba(255,255,255,.25);}
+
+@media(max-width:640px){
+  #modal{border-radius:24px}
+}
 </style>
 
 <script>
