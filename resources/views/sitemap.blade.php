@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://www.tourguidejejaklangkah.my.id/</loc>
+        <loc>https://tourguidejejaklangkah.my.id/</loc>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
 
     <url>
-        <loc>https://www.tourguidejejaklangkah.my.id/guides</loc>
+        <loc>https://tourguidejejaklangkah.my.id/guides</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
 
     @foreach($destinations as $destination)
     <url>
-        <loc>{{ url('/destinations/'.$destination->id) }}</loc>
+        <loc>https://tourguidejejaklangkah.my.id/destinations/{{ $destination->id }}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
