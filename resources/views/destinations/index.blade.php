@@ -3,10 +3,10 @@
 @php
 $heroImages = [
 'Pantai' => 'pantai1.jpg',
-'Pegunungan Bukit' => 'gunung1.jpg',
-'Wisata Alam' => 'alam1.jpg',
-'Wisata Religi' => 'religi1.jpg',
-'Wisata Tradisional' => 'tradisi1.jpg',
+'Pegunungan Bukit' => 'gunung3.jpeg',
+'Wisata Alam' => 'alam.jpeg',
+'Wisata Religi' => 'sade.jpg',
+'Wisata Tradisional' => 'wisata religi.jpeg',
 'Semua' => 'hero1.jpg'
 ];
 
