@@ -2,21 +2,23 @@
 
 @php
 $heroImages = [
-'Pantai' => 'pantai1.jpg',
-'Pegunungan Bukit' => 'gunung3.jpeg',
-'Wisata Alam' => 'alam.jpeg',
-'Wisata Religi' => 'sade.jpg',
-'Wisata Tradisional' => 'wisata religi.jpeg',
-'Semua' => 'hero1.jpg'
+    'Pantai' => 'pantai1.jpg',
+    'Pegunungan Bukit' => 'gunung3.jpeg',
+    'Wisata Alam' => 'alam.jpeg',
+    'Wisata Religi' => 'sade.jpg',
+    'Wisata Tradisional' => 'wisata religi.jpeg',
+    'Semua' => 'hero1.jpg'
 ];
 
+$carouselImages = ['hero.jpg','gunung1.jpeg','alam.jpeg'];
+
 $descriptions = [
-'Pantai' => 'Nikmati keindahan pantai dengan pasir putih, ombak yang tenang, dan panorama laut biru yang memanjakan mata.',
-'Pegunungan Bukit' => 'Jelajahi udara sejuk pegunungan dengan panorama perbukitan yang menenangkan jiwa dan pikiran.',
-'Wisata Alam' => 'Temukan pesona alam mulai dari air terjun, hutan hijau, hingga danau eksotis yang memesona.',
-'Wisata Religi' => 'Kunjungi destinasi religi penuh nilai sejarah, spiritual, dan budaya yang mendalam.',
-'Wisata Tradisional' => 'Rasakan kekayaan budaya lokal melalui desa adat, kerajinan, dan tradisi masyarakat setempat.',
-'Semua' => 'Temukan beragam destinasi wisata terbaik di Nusa Tenggara Barat yang siap memberikan pengalaman tak terlupakan.'
+    'Pantai' => 'Nikmati keindahan pantai dengan pasir putih, ombak yang tenang, dan panorama laut biru yang memanjakan mata.',
+    'Pegunungan Bukit' => 'Jelajahi udara sejuk pegunungan dengan panorama perbukitan yang menenangkan jiwa dan pikiran.',
+    'Wisata Alam' => 'Temukan pesona alam mulai dari air terjun, hutan hijau, hingga danau eksotis yang memesona.',
+    'Wisata Religi' => 'Kunjungi destinasi religi penuh nilai sejarah, spiritual, dan budaya yang mendalam.',
+    'Wisata Tradisional' => 'Rasakan kekayaan budaya lokal melalui desa adat, kerajinan, dan tradisi masyarakat setempat.',
+    'Semua' => 'Temukan beragam destinasi wisata terbaik di Nusa Tenggara Barat yang siap memberikan pengalaman tak terlupakan.'
 ];
 
 $active = ucwords(str_replace('-', ' ', $activeCategory ?? 'Semua'));
@@ -27,12 +29,22 @@ $desc = $descriptions[$active] ?? $descriptions['Semua'];
 @section('content')
 
 {{-- ================= HERO ================= --}}
-<section class="relative h-[540px] md:h-[620px] overflow-hidden"
-style="background-image:url('{{ asset('images/hero/'.$heroImage) }}'); background-size:cover; background-position:center;">
+<section class="relative h-[540px] md:h-[620px] overflow-hidden">
+
+@if($active === 'Semua')
+<div class="absolute inset-0 hero-carousel">
+    @foreach($carouselImages as $img)
+        <div class="carousel-slide"
+            style="background-image:url('{{ asset('images/hero/'.$img) }}')"></div>
+    @endforeach
+</div>
+@else
+<div class="absolute inset-0"
+    style="background-image:url('{{ asset('images/hero/'.$heroImage) }}'); background-size:cover; background-position:center;">
+</div>
+@endif
 
 <div class="absolute inset-0 bg-black/40"></div>
-
-{{-- Gradient vignette --}}
 <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-gray-100 via-gray-100/70 to-transparent"></div>
 
 <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
@@ -53,17 +65,16 @@ style="background-image:url('{{ asset('images/hero/'.$heroImage) }}'); backgroun
 {{-- ================= FILTER ICON ================= --}}
 @php
 $iconMap = [
-'Pantai' => 'bx-water',
-'Pegunungan Bukit' => 'bx-mountain',
-'Wisata Alam' => 'bx-leaf',
-'Wisata Religi' => 'bx-mosque',
-'Wisata Tradisional' => 'bx-home-heart'
+    'Pantai' => 'bx-water',
+    'Pegunungan Bukit' => 'bx-mountain',
+    'Wisata Alam' => 'bx-leaf',
+    'Wisata Religi' => 'bx-mosque',
+    'Wisata Tradisional' => 'bx-home-heart'
 ];
 @endphp
 
 <section class="bg-gray-100 pt-14 pb-6">
 <div class="max-w-7xl mx-auto px-6">
-
 <div class="flex justify-center gap-12 mb-10">
 
 <a href="{{ route('destinations.index') }}" class="filter-item {{ empty($activeCategory) ? 'active' : '' }}">
@@ -95,7 +106,6 @@ class="filter-item {{ $activeCategory === $cat ? 'active' : '' }}">
 <div class="max-w-7xl mx-auto px-6">
 
 @if($destinations->count())
-
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
 
 @foreach($destinations as $d)
@@ -130,7 +140,6 @@ class="filter-item {{ $activeCategory === $cat ? 'active' : '' }}">
 <div class="mt-12 flex justify-end">
 {{ $destinations->links() }}
 </div>
-
 @else
 <p class="text-center text-gray-500">Destinasi tidak ditemukan.</p>
 @endif
@@ -142,14 +151,32 @@ class="filter-item {{ $activeCategory === $cat ? 'active' : '' }}">
 <style>
 .filter-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;color:#9ca3af;transition:.3s;}
 .filter-item i{font-size:2.2rem;}
-.filter-item:hover{color:#0f766e;}
-.filter-item.active{color:#0f766e;}
+.filter-item:hover,.filter-item.active{color:#0f766e;}
 .filter-item.active i{transform:scale(1.25);}
 .filter-item .underline{height:3px;width:0;background:#0f766e;border-radius:999px;transition:.3s;}
 .filter-item.active .underline{width:100%;}
 
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .animate-fadeIn{animation:fadeIn 1s ease;}
+
+.hero-carousel{position:absolute;inset:0;overflow:hidden;}
+.carousel-slide{
+    position:absolute;inset:0;
+    background-size:cover;background-position:center;
+    opacity:0;
+    animation:slideShow 18s infinite;
+}
+.carousel-slide:nth-child(1){animation-delay:0s;}
+.carousel-slide:nth-child(2){animation-delay:6s;}
+.carousel-slide:nth-child(3){animation-delay:12s;}
+
+@keyframes slideShow{
+    0%{opacity:0}
+    10%{opacity:1}
+    30%{opacity:1}
+    40%{opacity:0}
+    100%{opacity:0}
+}
 </style>
 
 @endsection
