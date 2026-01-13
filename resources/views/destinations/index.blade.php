@@ -5,7 +5,7 @@ $heroImages = [
     'Pantai' => 'pantai1.jpg',
     'Pegunungan Bukit' => 'gunung3.jpeg',
     'Wisata Alam' => 'alam.jpeg',
-    'Wisata Religi' => 'sade.jpg',
+    'Wisata Religi' => 'sade.png',
     'Wisata Tradisional' => 'wisata religi.jpeg',
     'Semua' => 'hero1.jpg'
 ];
